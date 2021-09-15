@@ -166,18 +166,9 @@
 (>= d7 0)
 (>= d8 0)
 
-; b)  prittles and crottles are not allowed to be put in the same truck
-(<= (+ (ite (> p1 0) 1 0) (ite (> c1 0) 1 0)) 1)
-(<= (+ (ite (> p2 0) 1 0) (ite (> c2 0) 1 0)) 1)
-(<= (+ (ite (> p3 0) 1 0) (ite (> c3 0) 1 0)) 1)
-(<= (+ (ite (> p4 0) 1 0) (ite (> c4 0) 1 0)) 1)
-(<= (+ (ite (> p5 0) 1 0) (ite (> c5 0) 1 0)) 1)
-(<= (+ (ite (> p6 0) 1 0) (ite (> c6 0) 1 0)) 1)
-(<= (+ (ite (> p7 0) 1 0) (ite (> c7 0) 1 0)) 1)
-(<= (+ (ite (> p8 0) 1 0) (ite (> c8 0) 1 0)) 1)
 ))
 
-; a) maximize number of pallets of prittles
+; maximize number of pallets of prittles
 (maximize (+ p1 p2 p3 p4 p5 p6 p7 p8))
 
 (check-sat)
