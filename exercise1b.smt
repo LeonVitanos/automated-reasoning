@@ -62,18 +62,24 @@
 (declare-const t7 Int)
 (declare-const t8 Int)
 
+; declare number of pallets a truck can have, and number of trucks that have cooling facilities
+(declare-const np Int)
+(declare-const nc Int)
+
 (assert (and
 
-; initialize weights
+; initialize variables
 (= wn 700)
 (= wp 400)
 (= ws 1000)
 (= wc 2500)
 (= wd 200)
 (= wt 8000)
+(= np 8)
+(= nc 3)
 
 ; only three of the eight trucks have facility for cooling skipples
-(<= (+ (ite (> s1 0) 1 0) (ite (> s2 0) 1 0) (ite (> s3 0) 1 0) (ite (> s4 0) 1 0) (ite (> s5 0) 1 0) (ite (> s6 0) 1 0) (ite (> s7 0) 1 0) (ite (> s8 0) 1 0)) 3)
+(<= (+ (ite (> s1 0) 1 0) (ite (> s2 0) 1 0) (ite (> s3 0) 1 0) (ite (> s4 0) 1 0) (ite (> s5 0) 1 0) (ite (> s6 0) 1 0) (ite (> s7 0) 1 0) (ite (> s8 0) 1 0)) nc)
 
 ; the total weight of the items in a truck must not exceed capacity of the track
 (= (+ (* n1 wn) (* p1 wp) (* s1 ws) (* c1 wc) (* d1 wd)) t1)
@@ -95,14 +101,14 @@
 (<= t8 wt)
 
 ; every truck can carry at most eight pallets
-(<= (+ n1 p1 s1 c1 d1) 8)
-(<= (+ n2 p2 s2 c2 d2) 8)
-(<= (+ n3 p3 s3 c3 d3) 8)
-(<= (+ n4 p4 s4 c4 d4) 8)
-(<= (+ n5 p5 s5 c5 d5) 8)
-(<= (+ n6 p6 s6 c6 d6) 8)
-(<= (+ n7 p7 s7 c7 d7) 8)
-(<= (+ n8 p8 s8 c8 d8) 8)
+(<= (+ n1 p1 s1 c1 d1) np)
+(<= (+ n2 p2 s2 c2 d2) np)
+(<= (+ n3 p3 s3 c3 d3) np)
+(<= (+ n4 p4 s4 c4 d4) np)
+(<= (+ n5 p5 s5 c5 d5) np)
+(<= (+ n6 p6 s6 c6 d6) np)
+(<= (+ n7 p7 s7 c7 d7) np)
+(<= (+ n8 p8 s8 c8 d8) np)
 
 ; we must deliver 4 pallets of nuzzles, 8 skippels, 10 crottles, 20 dupples
 (= (+ n1 n2 n3 n4 n5 n6 n7 n8) 4)
