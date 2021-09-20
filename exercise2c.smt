@@ -147,7 +147,7 @@
 (<= rc10y (- 30 rc10h))
 
 ; limits on heat production
-(or (>= (- pc1x pc2x) dist) (>= (- pc2x pc1x) dist) (>= (- pc1y pc2y) dist) (>= (- pc2y pc1y) dist))
+(or (>= (- (+ pc1x (* 0.5 pc1w)) (+ pc2x (* 0.5 pc2w))) dist) (>= (- (+ pc2x (* 0.5 pc2w)) (+ pc1x (* 0.5 pc1w))) dist) (>= (- (+ pc1y (* 0.5 pc1h)) (+ pc2y (* 0.5 pc2h))) dist) (>= (- (+ pc2y (* 0.5 pc2h)) (+ pc1y (* 0.5 pc1h))) dist))
 
 ; no overlapping
 (or (<= (+ pc1x pc1w) pc2x) (<= (+ pc2x pc2w) pc1x) (<= (+ pc1y pc1h) pc2y) (<= (+ pc2y pc2h) pc1y))
@@ -250,3 +250,4 @@
 ))
 (check-sat)
 (get-model)
+
