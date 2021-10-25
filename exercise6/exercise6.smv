@@ -1,0 +1,145 @@
+MODULE main
+
+VAR
+    truckLocation: {"S", "A", "B", "C", "D"};
+    truckLoad: -1..260;
+    villageA: -1..110;
+    villageB: -1..160;
+    villageC: -1..110;
+    villageD: -1..160;
+    unload: 0..160;
+
+TRANS
+    -- This is to ensure that the unloading quality is not too much (more than truck has, or more than a village can have)
+    (truckLoad - next(unload) >= 0) & (
+    (truckLocation="S" & next(truckLocation)="A" & villageA + next(unload) - 15 <= 110) |
+    (truckLocation="C" & next(truckLocation)="A" & villageA + next(unload) - 12 <= 110) |
+    (truckLocation="B" & next(truckLocation)="A" & villageA + next(unload) - 17 <= 110) |
+
+    (truckLocation="A" & next(truckLocation)="B" & villageB + next(unload) - 17 <= 160) |
+    (truckLocation="C" & next(truckLocation)="B" & villageB + next(unload) - 10 <= 160) |
+    (truckLocation="D" & next(truckLocation)="B" & villageB + next(unload) - 20 <= 160) |
+
+    (truckLocation="A" & next(truckLocation)="C" & villageC + next(unload) - 12 <= 110) |
+    (truckLocation="S" & next(truckLocation)="C" & villageC + next(unload) - 15 <= 110) |
+    (truckLocation="B" & next(truckLocation)="C" & villageC + next(unload) - 10 <= 110) |
+    (truckLocation="D" & next(truckLocation)="C" & villageC + next(unload) - 20 <= 110) |
+
+    (truckLocation="C" & next(truckLocation)="D" & villageD + next(unload) - 20 <= 160) |
+    (truckLocation="B" & next(truckLocation)="D" & villageD + next(unload) - 20 <= 160) |
+
+    next(truckLocation)="S")
+
+    --next(villageA>-1) &
+    --next(villageB>-1)
+    --next(villageC>-1) &
+    --next(villageD>-1) 
+
+ASSIGN
+    init(truckLocation):= "S";
+    init(truckLoad):= 260;
+    init(villageA):= 16;
+    init(villageB):= 80;
+    init(villageC):= 80;
+    init(villageD):= 80;
+    init(unload):= 0;
+
+    next(truckLocation):= 
+        case 
+            truckLocation="S": {"A", "C"};
+            truckLocation="A": {"S", "C", "B"};
+            truckLocation="C": {"S", "A", "B", "D"};
+            truckLocation="B": {"A", "C", "D"};
+            truckLocation="D": {"C", "B"};
+        esac;
+
+    next(truckLoad):= 
+        case
+        next(truckLocation)="S": 260;
+        (truckLoad - next(unload)) >= 0: truckLoad - next(unload);
+        TRUE: -1;
+        esac;
+
+    next(villageA):=
+        case
+        villageA = -1: -1;
+        truckLocation="S" & next(truckLocation)="A" & (villageA - 15) >= 0 & (villageA - 15 + next(unload)) <= 110: villageA - 15 + next(unload);
+        truckLocation="C" & next(truckLocation)="A" & (villageA - 12) >= 0 & (villageA - 12 + next(unload)) <= 110: villageA - 12 + next(unload);
+        truckLocation="B" & next(truckLocation)="A" & (villageA - 17) >= 0 & (villageA - 17 + next(unload)) <= 110: villageA - 17 + next(unload);
+        truckLocation="A" & next(truckLocation)="S" & (villageA - 15) >= 0: villageA - 15;
+        truckLocation="A" & next(truckLocation)="C" & (villageA - 12) >= 0: villageA - 12;
+        truckLocation="A" & next(truckLocation)="B" & (villageA - 17) >= 0: villageA - 17;
+        ((truckLocation="S" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="S")) & (villageA - 15) >= 0: villageA - 15;
+        ((truckLocation="B" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="B")) & (villageA - 10) >= 0: villageA - 10;
+        ((truckLocation="D" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="D")) & (villageA - 20) >= 0: villageA - 20;
+        ((truckLocation="B" & next(truckLocation)="D") | (truckLocation="D" & next(truckLocation)="B")) & (villageA - 20) >= 0: villageA - 20;
+        TRUE: -1;
+        esac;
+
+    next(villageB):=
+        case
+        villageB = -1: -1;
+        truckLocation="A" & next(truckLocation)="B" & (villageB - 17) >= 0 & (villageB - 17 + next(unload)) <= 160: villageB - 17 + next(unload);
+        truckLocation="D" & next(truckLocation)="B" & (villageB - 20) >= 0 & (villageB - 20 + next(unload)) <= 160: villageB - 20 + next(unload);
+        truckLocation="C" & next(truckLocation)="B" & (villageB - 10) >= 0 & (villageB - 10 + next(unload)) <= 160: villageB - 10 + next(unload);
+        truckLocation="B" & next(truckLocation)="A" & (villageB - 17) >= 0: villageB - 17;
+        truckLocation="B" & next(truckLocation)="D" & (villageB - 20) >= 0: villageB - 20;
+        truckLocation="B" & next(truckLocation)="C" & (villageB - 10) >= 0: villageB - 10;
+        --((truckLocation="S" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="S")) & (villageB - 15) >= 0: villageB - 15;
+        ((truckLocation="D" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="D")) & (villageB - 20) >= 0: villageB - 20;
+        ((truckLocation="C" & next(truckLocation)="A") | (truckLocation="A" & next(truckLocation)="C")) & (villageB - 12) >= 0: villageB - 12;
+        --((truckLocation="S" & next(truckLocation)="A") | (truckLocation="A" & next(truckLocation)="S")) & (villageB - 15) >= 0: villageB - 15;
+        TRUE: -1;
+        esac;
+
+    next(villageC):=
+        case
+        villageC = -1: -1;
+        truckLocation="S" & next(truckLocation)="C" & (villageC - 15) >= 0 & (villageC - 15 + next(unload)) <= 110: villageC - 15 + next(unload);
+        truckLocation="A" & next(truckLocation)="C" & (villageC - 12) >= 0 & (villageC - 12 + next(unload)) <= 110: villageC - 12 + next(unload);
+        truckLocation="B" & next(truckLocation)="C" & (villageC - 10) >= 0 & (villageC - 10 + next(unload)) <= 110: villageC - 10 + next(unload);
+        truckLocation="D" & next(truckLocation)="C" & (villageC - 20) >= 0 & (villageC - 20 + next(unload)) <= 110: villageC - 20 + next(unload);
+        truckLocation="C" & next(truckLocation)="S" & (villageC - 15) >= 0: villageC - 15;
+        --truckLocation="C" & next(truckLocation)="A" & (villageC - 12) >= 0: villageC - 12;
+        --truckLocation="C" & next(truckLocation)="B" & (villageC - 10) >= 0: villageC - 10;
+        --truckLocation="C" & next(truckLocation)="D" & (villageC - 20) >= 0: villageC - 20;
+        ((truckLocation="D" & next(truckLocation)="B") | (truckLocation="B" & next(truckLocation)="D")) & (villageC - 20) >= 0: villageC - 20;
+        ((truckLocation="A" & next(truckLocation)="B") | (truckLocation="B" & next(truckLocation)="A")) & (villageC - 17) >= 0: villageC - 17;
+        ((truckLocation="S" & next(truckLocation)="A") | (truckLocation="A" & next(truckLocation)="S")) & (villageC - 15) >= 0: villageC - 15;
+        TRUE: -1;
+        esac;
+        
+    next(villageD):=
+        case
+        villageD = -1: -1;
+        truckLocation="C" & next(truckLocation)="D" & (villageD - 20) >= 0 & (villageD - 20 + next(unload)) <= 160: villageD - 20 + next(unload);
+        truckLocation="B" & next(truckLocation)="D" & (villageD - 20) >= 0 & (villageD - 20 + next(unload)) <= 160: villageD - 20 + next(unload);
+        truckLocation="D" & next(truckLocation)="C" & (villageD - 20) >= 0: villageD - 20;
+        truckLocation="D" & next(truckLocation)="B" & (villageD - 20) >= 0: villageD - 20;
+        ((truckLocation="A" & next(truckLocation)="B") | (truckLocation="B" & next(truckLocation)="A")) & (villageD - 17) >= 0: villageD - 17;
+        -- ((truckLocation="S" & next(truckLocation)="A") | (truckLocation="A" & next(truckLocation)="S")) & (villageD - 15) >= 0: villageD - 15;
+        ((truckLocation="S" & next(truckLocation)="C") | (truckLocation="C" & next(truckLocation)="S") ) & (villageD - 15) >= 0: villageD - 15;
+        ((truckLocation="C" & next(truckLocation)="B") | (truckLocation="B" & next(truckLocation)="C")) & (villageD - 10) >= 0: villageD - 10;
+        ((truckLocation="C" & next(truckLocation)="A") | (truckLocation="A" & next(truckLocation)="C")) & (villageD - 10) >= 0: villageD - 10;
+        TRUE: -1;
+        esac;   
+
+    -- Is this even needed?
+    next(unload):= 
+        case
+        next(truckLocation)="S": 0;
+        next(truckLocation)="A": 0..110;
+        next(truckLocation)="B": 0..160;
+        next(truckLocation)="C": 0..110;
+        next(truckLocation)="D": 0..160;
+        TRUE: 0;
+        esac;
+
+--Adding FAIRNESS does not reduce the reachable state spaces
+FAIRNESS (villageA > -1 & villageB > -1 & villageC > -1 & villageD > -1)
+
+--Random formula just to test that formula checking is working
+CTLSPEC EF (villageA > -1)
+
+--AG	EF	up: • It	is	always	possible	to	get	the	system	eventually	up
+--A(up	U	down): The	system	always	goes	down,	but	is	up	before	this	happen
