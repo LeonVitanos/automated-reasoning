@@ -1,0 +1,68 @@
+============================== prooftrans ============================
+Prover9 (32) version Dec-2007, Dec 2007.
+Process 11164 was started by Leon on Leon-PC,
+Mon Oct 25 19:20:15 2021
+The command was "/cygdrive/c/Program Files (x86)/Prover9-Mace4/bin-win32/prover9".
+============================== end of head ===========================
+
+============================== end of input ==========================
+
+============================== PROOF =================================
+
+% -------- Comments from original proof --------
+% Proof 1 at 1.31 (+ 0.28) seconds.
+% Length of proof is 48.
+% Level of proof is 17.
+% Maximum clause weight is 17.
+% Given clauses 2201.
+
+1 R(x,y) -> R(a(x,z),a(y,z)) # label(non_clause).  [assumption].
+2 R(x,y) -> R(a(z,x),a(z,y)) # label(non_clause).  [assumption].
+3 R(x,y) -> R(d(x),d(y)) # label(non_clause).  [assumption].
+4 RR(x,y) & R(y,z) -> RR(x,z) # label(non_clause).  [assumption].
+5 RR(a(p,p),d(d(d(p)))) # label(non_clause) # label(goal).  [goal].
+6 R(a(x,y),a(y,x)).  [assumption].
+7 R(a(x,y),a(p,a(x,x))).  [assumption].
+8 R(a(x,a(y,z)),a(a(x,y),z)).  [assumption].
+9 R(a(x,a(x,x)),d(x)).  [assumption].
+10 -R(x,y) | R(a(x,z),a(y,z)).  [clausify(1)].
+11 -R(x,y) | R(a(z,x),a(z,y)).  [clausify(2)].
+12 -R(x,y) | R(d(x),d(y)).  [clausify(3)].
+13 RR(x,x).  [assumption].
+14 -RR(x,y) | -R(y,z) | RR(x,z).  [clausify(4)].
+15 -RR(a(p,p),d(d(d(p)))).  [deny(5)].
+16 R(a(a(x,a(x,x)),y),a(d(x),y)).  [ur(10,a,9,a)].
+18 R(a(a(x,y),z),a(a(p,a(x,x)),z)).  [ur(10,a,7,a)].
+21 R(a(x,a(y,a(z,u))),a(x,a(a(y,z),u))).  [ur(11,a,8,a)].
+22 R(a(x,a(y,z)),a(x,a(p,a(y,y)))).  [ur(11,a,7,a)].
+24 R(d(a(x,a(x,x))),d(d(x))).  [ur(12,a,9,a)].
+25 R(d(a(x,a(y,z))),d(a(a(x,y),z))).  [ur(12,a,8,a)].
+26 R(d(a(x,y)),d(a(p,a(x,x)))).  [ur(12,a,7,a)].
+27 R(d(a(x,y)),d(a(y,x))).  [ur(12,a,6,a)].
+30 RR(a(x,y),a(p,a(x,x))).  [ur(14,a,13,a,b,7,a)].
+32 -RR(a(p,p),x) | -R(x,d(d(d(p)))).  [resolve(15,a,14,c)].
+36 R(d(a(a(x,a(x,x)),y)),d(a(d(x),y))).  [ur(12,a,16,a)].
+39 -R(x,d(d(d(p)))) | -RR(a(p,p),y) | -R(y,x).  [resolve(32,a,14,c)].
+86 R(d(a(a(x,y),z)),d(a(a(p,a(x,x)),z))).  [ur(12,a,18,a)].
+175 -R(x,d(d(d(p)))) | -R(y,x) | -RR(a(p,p),z) | -R(z,y).  [resolve(39,b,14,c)].
+227 RR(a(x,y),a(p,a(p,a(x,x)))).  [ur(14,a,30,a,b,22,a)].
+230 R(a(x,a(y,a(z,u))),a(x,a(y,a(p,a(z,z))))).  [ur(11,a,22,a)].
+531 RR(a(x,y),a(a(p,p),a(x,x))).  [ur(14,a,227,a,b,8,a)].
+1029 RR(a(x,y),a(a(x,x),a(p,p))).  [ur(14,a,531,a,b,6,a)].
+1802 RR(a(x,y),a(a(x,x),a(p,a(p,p)))).  [ur(14,a,1029,a,b,22,a)].
+5152 -RR(a(p,p),d(a(a(p,x),a(d(p),d(p))))).  [ur(175,a,24,a,b,36,a,d,86,a)].
+6674 -RR(a(p,p),d(a(p,a(x,a(d(p),d(p)))))).  [ur(14,b,25,a,c,5152,a)].
+7707 -RR(a(p,p),d(a(a(d(p),d(p)),x))).  [ur(14,b,26,a,c,6674,a)].
+7758 -RR(a(p,p),d(a(x,a(d(p),d(p))))).  [ur(14,b,27,a,c,7707,a)].
+8031 -RR(a(p,p),d(a(d(p),x))).  [ur(14,b,26,a,c,7758,a)].
+8082 -RR(a(p,p),d(a(a(p,a(p,p)),x))).  [ur(14,b,36,a,c,8031,a)].
+9468 -RR(a(p,p),d(a(a(p,x),y))).  [ur(14,b,86,a,c,8082,a)].
+9522 -RR(a(p,p),d(a(x,a(p,y)))).  [ur(14,b,27,a,c,9468,a)].
+9808 -RR(a(p,p),d(a(p,x))).  [ur(14,b,26,a,c,9522,a)].
+9918 -RR(a(p,p),x) | -R(x,d(a(p,y))).  [resolve(9808,a,14,c)].
+11355 -R(x,d(a(p,y))) | -RR(a(p,p),z) | -R(z,x).  [resolve(9918,a,14,c)].
+14143 RR(a(x,y),a(a(x,x),a(p,a(p,a(p,p))))).  [ur(14,a,1802,a,b,230,a)].
+17477 -RR(a(p,p),a(a(p,x),a(p,a(x,a(p,x))))).  [ur(11355,a,9,a,c,21,a)].
+17478 $F.  [resolve(17477,a,14143,a)].
+
+============================== end of proof ==========================
