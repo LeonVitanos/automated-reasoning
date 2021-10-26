@@ -1,82 +1,30 @@
-;declare weights
-(declare-const wn Int)
-(declare-const wp Int)
-(declare-const ws Int)
-(declare-const wc Int)
-(declare-const wd Int)
-(declare-const wt Int)
-
-;declare an integer variable for each item type, for each truck
-;describing how many pallets of that item the truck has
-(declare-const n1 Int)
-(declare-const n2 Int)
-(declare-const n3 Int)
-(declare-const n4 Int)
-(declare-const n5 Int)
-(declare-const n6 Int)
-(declare-const n7 Int)
-(declare-const n8 Int)
-
-(declare-const p1 Int)
-(declare-const p2 Int)
-(declare-const p3 Int)
-(declare-const p4 Int)
-(declare-const p5 Int)
-(declare-const p6 Int)
-(declare-const p7 Int)
-(declare-const p8 Int)
-
-(declare-const s1 Int)
-(declare-const s2 Int)
-(declare-const s3 Int)
-(declare-const s4 Int)
-(declare-const s5 Int)
-(declare-const s6 Int)
-(declare-const s7 Int)
-(declare-const s8 Int)
-
-(declare-const c1 Int)
-(declare-const c2 Int)
-(declare-const c3 Int)
-(declare-const c4 Int)
-(declare-const c5 Int)
-(declare-const c6 Int)
-(declare-const c7 Int)
-(declare-const c8 Int)
-
-(declare-const d1 Int)
-(declare-const d2 Int)
-(declare-const d3 Int)
-(declare-const d4 Int)
-(declare-const d5 Int)
-(declare-const d6 Int)
-(declare-const d7 Int)
-(declare-const d8 Int)
-
-(declare-const t1 Int)
-(declare-const t2 Int)
-(declare-const t3 Int)
-(declare-const t4 Int)
-(declare-const t5 Int)
-(declare-const t6 Int)
-(declare-const t7 Int)
-(declare-const t8 Int)
-
-; declare number of pallets a truck can have, and number of trucks that have cooling facilities
-(declare-const np Int)
-(declare-const nc Int)
+;declare villageStorage
+(declare-const villageA Int)
+(declare-const villageB Int)
+(declare-const villageC Int)
+(declare-const villageD Int)
+(declare-const truckLoad Int)
+(declare-const unload Int)
+(declare-const truckLocation Int)
 
 (assert (and
 
 ; initialize variables
-(= wn 700)
-(= wp 400)
-(= ws 1000)
-(= wc 2500)
-(= wd 200)
-(= wt 8000)
-(= np 8)
-(= nc 3)
+(= villageA 80)
+(= villageB 80)
+(= villageC 80)
+(= villageD 80)
+(= truckLoad 250)
+
+
+
+
+
+
+
+
+
+
 
 ; only three of the eight trucks have facility for cooling skipples
 (<= (+ (ite (> s1 0) 1 0) (ite (> s2 0) 1 0) (ite (> s3 0) 1 0) (ite (> s4 0) 1 0) (ite (> s5 0) 1 0) (ite (> s6 0) 1 0) (ite (> s7 0) 1 0) (ite (> s8 0) 1 0)) nc)
